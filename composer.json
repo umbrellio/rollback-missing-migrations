@@ -1,0 +1,64 @@
+{
+    "name": "umbrellio/deploy-laravel",
+    "description": "Laravel package for rolling back migrations between different releases",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://github.com/umbrellio/php-deploy/issues",
+        "source": "https://github.com/umbrellio/php-deploy"
+    },
+    "keywords": [
+        "php",
+        "laravel",
+        "deploy",
+        "umbrellio"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Art4es",
+            "email": "Art4es@gmail.com"
+        },
+        {
+            "name": "Korben Dallas",
+            "email": "pvsaintpe@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Umbrellio\\Deploy\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Umbrellio\\Deploy\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.2|^7.3|^7.4|^8.0",
+        "illuminate/support": ">5.7",
+        "illuminate/database": ">5.7",
+        "illuminate/console": ">5.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.3|^8.5|^9.4",
+        "php-mock/php-mock": "^2.0",
+        "orchestra/testbench": "^3.8|^4.8|^5.7|^6.2",
+        "umbrellio/code-style-php": "^1.0",
+        "laravel/legacy-factories": "^1.0",
+        "php-coveralls/php-coveralls": "^2.1",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "scripts": {
+        "lint-fix": "vendor/bin/ecs check src --fix --config=ecs.yml",
+        "test": [
+            "vendor/bin/phpunit"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Umbrellio\\Deploy\\RollbackMissingMigrationServiceProvider"
+            ]
+        }
+    }
+}

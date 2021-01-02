@@ -25,6 +25,7 @@ class RollbackMissingMigrations extends BaseCommand
     {
         $this->migrator = App::make('migrator');
         $this->dbHelper = $dbHelper;
+
         parent::__construct();
     }
 
@@ -38,7 +39,8 @@ class RollbackMissingMigrations extends BaseCommand
         }
 
         $backup = $this->dbHelper->backupBatchNumbers($migrationsForRollback);
-        $nextBatchNumber = $this->migrator->getRepository()->getNextBatchNumber();
+        $nextBatchNumber = $this->migrator->getRepository()
+            ->getNextBatchNumber();
         $this->dbHelper->updateBatch($migrationsForRollback, $nextBatchNumber);
         $this->rollback($this->argument('path_to_artisan'));
         $this->dbHelper->restoreBatchNumbers($backup);
@@ -48,7 +50,8 @@ class RollbackMissingMigrations extends BaseCommand
     protected function getMigrationsNamesForRollback(): array
     {
         $migrationsFromFiles = array_keys($this->migrator->getMigrationFiles($this->getMigrationPaths()));
-        $migrationsFromDb = $this->migrator->getRepository()->getRan();
+        $migrationsFromDb = $this->migrator->getRepository()
+            ->getRan();
         return array_diff($migrationsFromDb, $migrationsFromFiles);
     }
 

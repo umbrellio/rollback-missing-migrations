@@ -29,7 +29,9 @@ class DbHelper
     {
         DB::table($this->migrationTable)
             ->whereIn('migration', $migrationsNames)
-            ->update(['batch' => $batchNumber]);
+            ->update([
+                'batch' => $batchNumber,
+            ]);
     }
 
     public function restoreBatchNumbers(Collection $backupData)
@@ -37,7 +39,9 @@ class DbHelper
         $backupData->each(function ($migrationData) {
             DB::table($this->migrationTable)
                 ->where('migration', $migrationData->migration)
-                ->update(['batch' => $migrationData->batch]);
+                ->update([
+                    'batch' => $migrationData->batch,
+                ]);
         });
     }
 

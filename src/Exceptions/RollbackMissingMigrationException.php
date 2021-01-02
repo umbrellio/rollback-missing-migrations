@@ -13,7 +13,9 @@ class RollbackMissingMigrationException extends Exception
     public function __construct(Collection $migrations, $code = 0, Throwable $previous = null)
     {
         $title = 'Rollback migrations failed. Migrations which are not rolled back:';
-        $message = $migrations->prepend($title)->join(PHP_EOL);
+        $message = $migrations->prepend($title)
+            ->join(PHP_EOL);
+
         parent::__construct($message, $code, $previous);
     }
 }

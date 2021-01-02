@@ -1,5 +1,5 @@
 {
-    "name": "umbrellio/deploy-laravel",
+    "name": "umbrellio/php-deploy",
     "description": "Laravel package for rolling back migrations between different releases",
     "minimum-stability": "dev",
     "support": {

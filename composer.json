@@ -1,5 +1,5 @@
 {
-    "name": "umbrellio/deploy-laravel",
+    "name": "umbrellio/php-deploy",
     "description": "Laravel package for rolling back migrations between different releases",
     "minimum-stability": "dev",
     "support": {
@@ -34,7 +34,7 @@
         }
     },
     "require": {
-        "php": "^7.2|^7.3|^7.4|^8.0",
+        "php": "^7.3|^7.4|^8.0",
         "illuminate/support": ">5.7",
         "illuminate/database": ">5.7",
         "illuminate/console": ">5.7"

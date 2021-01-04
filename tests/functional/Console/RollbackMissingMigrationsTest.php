@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Umbrellio\Deploy\Tests\functional\Console;
 
 use Generator;
@@ -11,12 +13,9 @@ use Umbrellio\Deploy\Tests\FunctionalTestCase;
 
 class RollbackMissingMigrationsTest extends FunctionalTestCase
 {
-    protected function getPackageProviders($app): array
-    {
-        return [
-            RollbackMissingMigrationServiceProvider::class,
-        ];
-    }
+    private const APP_PATH = __DIR__ . '/../../_data/app/';
+    private const RELEASE_PATH = self::APP_PATH . 'release/';
+    private const DATABASE_PATH = self::APP_PATH . 'database/';
 
     public function provideMigrations(): Generator
     {
@@ -45,10 +44,10 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
         $this->assertSame($before, $this->getMigrations());
 
         Artisan::call('rollback_missing_migrations:rollback', [
-            'path_to_artisan' => realpath(__DIR__ . '/../../_data/app/release/artisan'),
+            'path_to_artisan' => realpath(self::RELEASE_PATH . 'artisan'),
             '--realpath' => true,
-            '--old-path' => realpath(__DIR__ . '/../../_data/app/database/old_migrations'),
-            '--path' => realpath(__DIR__ . '/../../_data/app/database/new_migrations'),
+            '--old-path' => realpath(self::DATABASE_PATH . 'old_migrations'),
+            '--path' => realpath(self::DATABASE_PATH . 'new_migrations'),
         ]);
 
         $this->assertSame($after, $this->getMigrations());
@@ -63,10 +62,10 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
         $this->assertSame($before, $this->getMigrations());
 
         Artisan::call('rollback_missing_migrations:rollback', [
-            'path_to_artisan' => realpath(__DIR__ . '/../../_data/app/release/artisan'),
+            'path_to_artisan' => realpath(self::RELEASE_PATH . 'artisan'),
             '--realpath' => true,
-            '--old-path' => realpath(__DIR__ . '/../../_data/app/database/old_migrations'),
-            '--path' => realpath(__DIR__ . '/../../_data/app/database/old_migrations'),
+            '--old-path' => realpath(self::DATABASE_PATH . 'old_migrations'),
+            '--path' => realpath(self::DATABASE_PATH . 'old_migrations'),
         ]);
 
         $this->assertSame($before, $this->getMigrations());
@@ -80,11 +79,18 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
         $this->expectException(RollbackMissingMigrationException::class);
 
         Artisan::call('rollback_missing_migrations:rollback', [
-            'path_to_artisan' => realpath(__DIR__ . '/../../_data/app/release/artisan'),
+            'path_to_artisan' => realpath(self::RELEASE_PATH . 'artisan'),
             '--realpath' => true,
-            '--old-path' => realpath(__DIR__ . '/../../_data/app/database/fail_migrations'),
-            '--path' => realpath(__DIR__ . '/../../_data/app/database/new_migrations'),
+            '--old-path' => realpath(self::DATABASE_PATH . 'fail_migrations'),
+            '--path' => realpath(self::DATABASE_PATH . 'new_migrations'),
         ]);
+    }
+
+    protected function getPackageProviders($app): array
+    {
+        return [
+            RollbackMissingMigrationServiceProvider::class,
+        ];
     }
 
     private function getMigrations(): array

@@ -13,7 +13,7 @@ use Umbrellio\Deploy\Tests\FunctionalTestCase;
 
 class RollbackMissingMigrationsTest extends FunctionalTestCase
 {
-    private const APP_PATH = __DIR__ . '/../../_data/app/';
+    private const APP_PATH = __DIR__ . '/../../../app/';
     private const RELEASE_PATH = self::APP_PATH . 'release/';
     private const DATABASE_PATH = self::APP_PATH . 'database/';
 

@@ -6,6 +6,6 @@ phpunit.xml
 .phpunit.result.cache
 .DS_Store
 composer.lock
-/tests/_data/app/release
-/tests/_data/app/.env
-/tests/_data/app/composer.json
+app/release
+app/.env
+app/composer.json

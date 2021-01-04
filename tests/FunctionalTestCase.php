@@ -54,7 +54,7 @@ abstract class FunctionalTestCase extends TestCase
 
     private function setUpDatabase($app): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/_data/app/database/old_migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../app/database/old_migrations');
 
         $this->artisan('migrate', [
             '--no-interaction' => true,

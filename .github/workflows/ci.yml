@@ -74,17 +74,23 @@ jobs:
           - operating_system: ubuntu-latest
             postgres: '10'
             php_versions: '7.4'
-            laravel: '^8.0'
+            laravel: '^7.0'
             experimental: false
             coverage: true
           - operating_system: ubuntu-latest
             postgres: '11'
-            php_versions: '8.0'
+            php_versions: '7.4'
             laravel: '^8.0'
             experimental: false
             coverage: false
           - operating_system: ubuntu-latest
             postgres: '12'
+            php_versions: '8.0'
+            laravel: '^8.0'
+            experimental: false
+            coverage: false
+          - operating_system: ubuntu-latest
+            postgres: '13'
             php_versions: '8.0'
             laravel: '^8.0'
             experimental: true
@@ -148,7 +154,7 @@ jobs:
           POSTGRES_HOST: 127.0.0.1
           POSTGRES_PORT: 5432
         run: |
-          cd tests/_data/app
+          cd app
           rm -f .env
           rm -f composer.json
           sed -e "s/\${USERNAME}/${{ env.DB_USER }}/" \
@@ -167,7 +173,7 @@ jobs:
           cp -rf database/new_migrations release/database/migrations
           cp .env release/.env
           cd release && composer update
-          cd ../../../../
+          cd ../../
           if [[ ${{ matrix.coverage }} == true ]]; then
             ./vendor/bin/phpunit --verbose --stderr --configuration phpunit.github.xml --coverage-clover build/logs/clover.xml --coverage-text
           else

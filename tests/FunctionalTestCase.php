@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Umbrellio\TableSync\Tests\functional\Laravel;
+namespace Umbrellio\Deploy\Tests;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -10,7 +10,7 @@ use Orchestra\Testbench\TestCase;
 
 abstract class FunctionalTestCase extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -25,8 +25,8 @@ abstract class FunctionalTestCase extends TestCase
 
         $params = $this->getConnectionParams();
 
-        $app['config']->set('database.default', 'main');
-        $app['config']->set('database.connections.main', [
+        $app['config']->set('database.default', 'pgsql');
+        $app['config']->set('database.connections.pgsql', [
             'driver' => 'pgsql',
             'host' => $params['host'],
             'port' => (int) $params['port'],
@@ -37,6 +37,7 @@ abstract class FunctionalTestCase extends TestCase
             'prefix' => '',
             'schema' => 'public',
         ]);
+        $app['config']->set('database.migrations', 'migrations');
     }
 
     /**
@@ -53,11 +54,11 @@ abstract class FunctionalTestCase extends TestCase
 
     private function setUpDatabase($app): void
     {
-        $this->loadLaravelMigrations();
-        $this->loadMigrationsFrom(__DIR__ . '/../../../database/Laravel/migrations');
-        $this->loadFactoriesUsing($app, __DIR__ . '/../../../database/Laravel/factories');
+        $this->loadMigrationsFrom(__DIR__ . '/_data/app/database/old_migrations');
 
-        $this->artisan('migrate');
+        $this->artisan('migrate', [
+            '--no-interaction' => true,
+        ]);
     }
 
     private function getConnectionParams(): array

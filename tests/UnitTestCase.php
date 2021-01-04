@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Umbrellio\TableSync\Tests;
+namespace Umbrellio\Deploy\Tests;
 
 use PHPUnit\Framework\TestCase;
 

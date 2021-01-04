@@ -50,6 +50,7 @@ class DbHelper
         $migrations = DB::table($this->migrationTable)
             ->whereIn('migration', $migrationsForRollback)
             ->pluck('migration');
+
         if ($migrations->isNotEmpty()) {
             throw new RollbackMissingMigrationException($migrations);
         }

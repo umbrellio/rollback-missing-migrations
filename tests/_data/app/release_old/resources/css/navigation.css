@@ -1,0 +1,19 @@
+nav .navigation__items {
+    @apply w-screen hidden absolute bg-white shadow rounded;
+    right: 0;
+    top: 100%;
+}
+
+nav .navigation__items li {
+    white-space: nowrap;
+}
+
+nav .navigation__toggle:focus + .navigation__items {
+    @apply block;
+}
+
+@screen md {
+    nav .navigation__items {
+        @apply w-auto block static rounded-none shadow-none;
+    }
+}

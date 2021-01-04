@@ -11,7 +11,7 @@ sed -e "s/\${USERNAME}/postgres/" \
     .env.sample > .env
 sed -e "s/\${LARAVEL_VERSION}/8.0/" composer.json.sample > composer.json
 rm -rf release
-composer create-project rvxlab/project-skeleton release
+composer create-project laravel/laravel release
 rm -rf release/database/migrations
 rm release/composer.json
 rm release/.env

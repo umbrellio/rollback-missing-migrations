@@ -88,9 +88,7 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
 
     protected function getPackageProviders($app): array
     {
-        return [
-            RollbackMissingMigrationServiceProvider::class,
-        ];
+        return [RollbackMissingMigrationServiceProvider::class];
     }
 
     private function getMigrations(): array

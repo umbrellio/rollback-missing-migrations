@@ -2,8 +2,8 @@
 
 psql postgres -U user -tc "SELECT 1 FROM pg_database WHERE datname = 'testing'" | grep -q 1 || psql postgres -U user -c "CREATE DATABASE testing"
 cd tests/_data/app
-rm .env
-rm composer.json
+rm -f .env
+rm -f composer.json
 sed -e "s/\${USERNAME}/postgres/" \
     -e "s/\${PASSWORD}//" \
     -e "s/\${DATABASE}/testing/" \

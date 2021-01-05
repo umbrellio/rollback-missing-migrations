@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace Umbrellio\Deploy\Tests;
 
 use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase;
 
 abstract class FunctionalTestCase extends TestCase
 {
-//    use RefreshDatabase;
-
     protected function setUp(): void
     {
         parent::setUp();

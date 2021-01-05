@@ -64,7 +64,7 @@ class RollbackMissingMigrations extends BaseCommand
             $this->getOldPaths(),
             $this->getRealpath()
         );
-        $process = Process::fromShellCommandline($command, null, null, null, 5.0);
+        $process = Process::fromShellCommandline($command);
         $process->run();
 
         $this->line($process->getOutput());

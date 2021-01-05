@@ -1,12 +1,18 @@
 name: CI
 
-on:	
+on:
   push:
-    branches:
-      - '*'
   pull_request:
+    branches:
+      # Branches from forks have the form 'user:branch-name' so we only run
+      # this job on pull_request events for branches that look like fork
+      # branches. Without this we would end up running this job twice for non
+      # forked PRs, once for the push and then once for opening the PR.
+      - '**:**'
   schedule:
     - cron: '0 0 * * *'
+  tags:
+    - "*.*.*"
 
 env:
   php_extensions: 'apcu, bcmath, ctype, curl, dom, iconv, intl, json, mbstring, opcache, openssl, pdo, pdo_pgsql, pcntl, pcov, posix, redis, session, simplexml, sockets, tokenizer, xml, xmlwriter, zip'
@@ -14,6 +20,7 @@ env:
   DB_USER: 'postgres'
   DB_NAME: 'testing'
   DB_PASSWORD: 'postgres'
+  DB_HOST: '127.0.0.1'
 
 jobs:	
   lint:
@@ -151,7 +158,7 @@ jobs:
           POSTGRES_USER: ${{ env.DB_USER }}
           POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
           POSTGRES_DB: ${{ env.DB_NAME }}
-          POSTGRES_HOST: 127.0.0.1
+          POSTGRES_HOST: ${{ env.DB_HOST }}
           POSTGRES_PORT: 5432
         run: |
           cd app
@@ -160,9 +167,11 @@ jobs:
           sed -e "s/\${USERNAME}/${{ env.DB_USER }}/" \
               -e "s/\${PASSWORD}/${{ env.DB_PASSWORD }}/" \
               -e "s/\${DATABASE}/${{ env.DB_NAME }}/" \
-              -e "s/\${HOST}/127.0.0.1/" \
+              -e "s/\${HOST}/${{ env.DB_NAME }}/" \
               .env.sample > .env
-          sed -e "s/\${LARAVEL_VERSION}/${{ matrix.laravel }}/" composer.json.sample > composer.json
+          sed -e "s/\${LARAVEL_VERSION}/${{ matrix.laravel }}/" \
+              -e "s/\${PHP_VERSION}/${{ matrix.php_versions }}/" \
+              composer.json.sample > composer.json
           rm -rf release
           composer create-project --prefer-dist laravel/laravel:${{ matrix.laravel }} release
           rm -rf release/database/migrations

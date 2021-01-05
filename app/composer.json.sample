@@ -3,7 +3,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": ">=7.3",
+        "php": "^${PHP_VERSION}",
         "fideloper/proxy": "*",
         "fruitcake/laravel-cors": "*",
         "guzzlehttp/guzzle": "*",

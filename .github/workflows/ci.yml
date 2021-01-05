@@ -93,7 +93,7 @@ jobs:
             postgres: '13'
             php_versions: '8.0'
             laravel: '^8.0'
-            experimental: true
+            experimental: false
             coverage: false
     runs-on: '${{ matrix.operating_system }}'
     services:
@@ -164,7 +164,7 @@ jobs:
               .env.sample > .env
           sed -e "s/\${LARAVEL_VERSION}/${{ matrix.laravel }}/" composer.json.sample > composer.json
           rm -rf release
-          composer create-project laravel/laravel release
+          composer create-project --prefer-dist laravel/laravel:${{ matrix.laravel }} release
           rm -rf release/database/migrations
           rm release/composer.json
           rm release/.env

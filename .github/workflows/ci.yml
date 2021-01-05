@@ -5,12 +5,11 @@ on:
     branches:
       - master
   pull_request:
-    branches:
-      - master
-  schedule:
-    - cron: '0 0 * * *'
-  tags:
-    - "*.*.*"
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
 
 env:
   php_extensions: 'apcu, bcmath, ctype, curl, dom, iconv, intl, json, mbstring, opcache, openssl, pdo, pdo_pgsql, pcntl, pcov, posix, redis, session, simplexml, sockets, tokenizer, xml, xmlwriter, zip'

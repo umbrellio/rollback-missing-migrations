@@ -42,10 +42,7 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
     public function rollbackSuccessful(array $before, array $after): void
     {
         $this->assertSame($before, $this->getMigrations());
-        $this->rollback(
-            self::DATABASE_PATH . 'new_migrations',
-            self::DATABASE_PATH . 'old_migrations'
-        );
+        $this->rollback(self::DATABASE_PATH . 'new_migrations', self::DATABASE_PATH . 'old_migrations');
         $this->assertSame($after, $this->getMigrations());
     }
 
@@ -56,10 +53,7 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
     public function nothingToRollback(array $before): void
     {
         $this->assertSame($before, $this->getMigrations());
-        $this->rollback(
-            self::DATABASE_PATH . 'old_migrations',
-            self::DATABASE_PATH . 'old_migrations'
-        );
+        $this->rollback(self::DATABASE_PATH . 'old_migrations', self::DATABASE_PATH . 'old_migrations');
         $this->assertSame($before, $this->getMigrations());
     }
 
@@ -69,10 +63,7 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
     public function rollbackFail(): void
     {
         $this->expectException(RollbackMissingMigrationException::class);
-        $this->rollback(
-            self::DATABASE_PATH . 'new_migrations',
-            self::DATABASE_PATH . 'fail_migrations'
-        );
+        $this->rollback(self::DATABASE_PATH . 'new_migrations', self::DATABASE_PATH . 'fail_migrations');
     }
 
     protected function getPackageProviders($app): array

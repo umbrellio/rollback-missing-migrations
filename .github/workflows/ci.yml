@@ -151,25 +151,16 @@ jobs:
         working-directory: './'
       - name: 'Run Unit Tests with PHPUnit'
         continue-on-error: ${{ matrix.experimental }}
-        env:
-          POSTGRES_USER: ${{ env.DB_USER }}
-          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
-          POSTGRES_DB: ${{ env.DB_NAME }}
-          POSTGRES_HOST: ${{ env.DB_HOST }}
-          POSTGRES_PORT: 5432
         run: |
           cd app
-          rm -f .env
-          rm -f composer.json
           sed -e "s/\${USERNAME}/${{ env.DB_USER }}/" \
               -e "s/\${PASSWORD}/${{ env.DB_PASSWORD }}/" \
               -e "s/\${DATABASE}/${{ env.DB_NAME }}/" \
-              -e "s/\${HOST}/${{ env.DB_NAME }}/" \
+              -e "s/\${HOST}/${{ env.DB_HOST }}/" \
               .env.sample > .env
           sed -e "s/\${LARAVEL_VERSION}/${{ matrix.laravel }}/" \
               -e "s/\${PHP_VERSION}/${{ matrix.php_versions }}/" \
               composer.json.sample > composer.json
-          rm -rf release
           composer create-project --prefer-dist laravel/laravel:${{ matrix.laravel }} release
           rm -rf release/database/migrations
           rm release/composer.json
@@ -180,10 +171,15 @@ jobs:
           cp .env release/.env
           cd release && composer update
           cd ../../
+          sed -e "s/\${USERNAME}/${{ env.DB_USER }}/" \
+              -e "s/\${PASSWORD}/${{ env.DB_PASSWORD }}/" \
+              -e "s/\${DATABASE}/${{ env.DB_NAME }}/" \
+              -e "s/\${HOST}/${{ env.DB_HOST }}/" \
+              phpunit.xml.dist > phpunit.xml
           if [[ ${{ matrix.coverage }} == true ]]; then
-            ./vendor/bin/phpunit --verbose --stderr --configuration phpunit.github.xml --coverage-clover build/logs/clover.xml --coverage-text
+            ./vendor/bin/phpunit --verbose --stderr --coverage-clover build/logs/clover.xml --coverage-text
           else
-            ./vendor/bin/phpunit --verbose --stderr --configuration phpunit.github.xml
+            ./vendor/bin/phpunit --verbose --stderr
           fi
         working-directory: './'
       - name: 'Upload coverage results to Coveralls'

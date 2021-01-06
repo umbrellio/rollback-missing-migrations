@@ -24,4 +24,9 @@ cp .env release/.env
 cd release && composer update
 cd ../../ && composer update
 composer lint-fix
+sed -e "s/\${USERNAME}/postgres/" \
+    -e "s/\${PASSWORD}//" \
+    -e "s/\${DATABASE}/testing/" \
+    -e "s/\${HOST}/127.0.0.1/" \
+    phpunit.xml.dist > phpunit.xml
 php -d pcov.directory='.' vendor/bin/phpunit --coverage-html build --coverage-text

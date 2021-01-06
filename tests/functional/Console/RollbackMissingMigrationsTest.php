@@ -42,14 +42,10 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
     public function rollbackSuccessful(array $before, array $after): void
     {
         $this->assertSame($before, $this->getMigrations());
-
-        Artisan::call('rollback_missing_migrations:rollback', [
-            'path_to_artisan' => realpath(self::RELEASE_PATH . 'artisan'),
-            '--realpath' => true,
-            '--old-path' => realpath(self::DATABASE_PATH . 'old_migrations'),
-            '--path' => realpath(self::DATABASE_PATH . 'new_migrations'),
-        ]);
-
+        $this->rollback(
+            self::DATABASE_PATH . 'new_migrations',
+            self::DATABASE_PATH . 'old_migrations'
+        );
         $this->assertSame($after, $this->getMigrations());
     }
 
@@ -60,14 +56,10 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
     public function nothingToRollback(array $before): void
     {
         $this->assertSame($before, $this->getMigrations());
-
-        Artisan::call('rollback_missing_migrations:rollback', [
-            'path_to_artisan' => realpath(self::RELEASE_PATH . 'artisan'),
-            '--realpath' => true,
-            '--old-path' => realpath(self::DATABASE_PATH . 'old_migrations'),
-            '--path' => realpath(self::DATABASE_PATH . 'old_migrations'),
-        ]);
-
+        $this->rollback(
+            self::DATABASE_PATH . 'old_migrations',
+            self::DATABASE_PATH . 'old_migrations'
+        );
         $this->assertSame($before, $this->getMigrations());
     }
 
@@ -77,13 +69,10 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
     public function rollbackFail(): void
     {
         $this->expectException(RollbackMissingMigrationException::class);
-
-        Artisan::call('rollback_missing_migrations:rollback', [
-            'path_to_artisan' => realpath(self::RELEASE_PATH . 'artisan'),
-            '--realpath' => true,
-            '--old-path' => realpath(self::DATABASE_PATH . 'fail_migrations'),
-            '--path' => realpath(self::DATABASE_PATH . 'new_migrations'),
-        ]);
+        $this->rollback(
+            self::DATABASE_PATH . 'new_migrations',
+            self::DATABASE_PATH . 'fail_migrations'
+        );
     }
 
     protected function getPackageProviders($app): array
@@ -94,5 +83,15 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
     private function getMigrations(): array
     {
         return DB::table('migrations')->get()->pluck('migration')->toArray();
+    }
+
+    private function rollback(string $path, string $oldPath): void
+    {
+        Artisan::call('rollback_missing_migrations:rollback', [
+            'path_to_artisan' => realpath(self::RELEASE_PATH . 'artisan'),
+            '--realpath' => true,
+            '--old-path' => realpath($oldPath),
+            '--path' => realpath($path),
+        ]);
     }
 }

@@ -74,7 +74,7 @@ class RollbackMissingMigrations extends BaseCommand
     {
         $targetPaths = [];
         if ($this->input->hasOption('old-path') && $this->option('old-path')) {
-            $targetPaths = [$this->option('old-path')];
+            $targetPaths = (array) $this->option('old-path');
         }
 
         return implode(' ', array_map(function (string $path) {

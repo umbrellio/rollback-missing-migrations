@@ -1,0 +1,44 @@
+{
+    "name": "laravel/laravel",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^${PHP_VERSION}",
+        "fideloper/proxy": "*",
+        "fruitcake/laravel-cors": "*",
+        "guzzlehttp/guzzle": "*",
+        "laravel/framework": "${LARAVEL_VERSION}",
+        "laravel/tinker": "*"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    }
+}

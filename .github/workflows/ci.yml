@@ -1,12 +1,15 @@
 name: CI
 
-on:	
+on:
   push:
     branches:
-      - '*'
+      - master
   pull_request:
-  schedule:
-    - cron: '0 0 * * *'
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
 
 env:
   php_extensions: 'apcu, bcmath, ctype, curl, dom, iconv, intl, json, mbstring, opcache, openssl, pdo, pdo_pgsql, pcntl, pcov, posix, redis, session, simplexml, sockets, tokenizer, xml, xmlwriter, zip'
@@ -14,6 +17,7 @@ env:
   DB_USER: 'postgres'
   DB_NAME: 'testing'
   DB_PASSWORD: 'postgres'
+  DB_HOST: '127.0.0.1'
 
 jobs:	
   lint:
@@ -74,20 +78,26 @@ jobs:
           - operating_system: ubuntu-latest
             postgres: '10'
             php_versions: '7.4'
-            laravel: '^8.0'
+            laravel: '^7.0'
             experimental: false
             coverage: true
           - operating_system: ubuntu-latest
             postgres: '11'
-            php_versions: '8.0'
+            php_versions: '7.4'
             laravel: '^8.0'
             experimental: false
-            coverage: false
+            coverage: true
           - operating_system: ubuntu-latest
             postgres: '12'
             php_versions: '8.0'
             laravel: '^8.0'
-            experimental: true
+            experimental: false
+            coverage: true
+          - operating_system: ubuntu-latest
+            postgres: '13'
+            php_versions: '8.0'
+            laravel: '^8.0'
+            experimental: false
             coverage: false
     runs-on: '${{ matrix.operating_system }}'
     services:
@@ -141,17 +151,35 @@ jobs:
         working-directory: './'
       - name: 'Run Unit Tests with PHPUnit'
         continue-on-error: ${{ matrix.experimental }}
-        env:
-          POSTGRES_USER: ${{ env.DB_USER }}
-          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
-          POSTGRES_DB: ${{ env.DB_NAME }}
-          POSTGRES_HOST: 127.0.0.1
-          POSTGRES_PORT: 5432
         run: |
+          cd app
+          sed -e "s/\${USERNAME}/${{ env.DB_USER }}/" \
+              -e "s/\${PASSWORD}/${{ env.DB_PASSWORD }}/" \
+              -e "s/\${DATABASE}/${{ env.DB_NAME }}/" \
+              -e "s/\${HOST}/${{ env.DB_HOST }}/" \
+              .env.sample > .env
+          sed -e "s/\${LARAVEL_VERSION}/${{ matrix.laravel }}/" \
+              -e "s/\${PHP_VERSION}/${{ matrix.php_versions }}/" \
+              composer.json.sample > composer.json
+          composer create-project --prefer-dist laravel/laravel:${{ matrix.laravel }} release
+          rm -rf release/database/migrations
+          rm release/composer.json
+          rm release/.env
+          rm -rf release/tests
+          cp composer.json release/composer.json
+          cp -rf database/new_migrations release/database/migrations
+          cp .env release/.env
+          cd release && composer update
+          cd ../../
+          sed -e "s/\${USERNAME}/${{ env.DB_USER }}/" \
+              -e "s/\${PASSWORD}/${{ env.DB_PASSWORD }}/" \
+              -e "s/\${DATABASE}/${{ env.DB_NAME }}/" \
+              -e "s/\${HOST}/${{ env.DB_HOST }}/" \
+              phpunit.xml.dist > phpunit.xml
           if [[ ${{ matrix.coverage }} == true ]]; then
-            ./vendor/bin/phpunit --verbose --stderr --configuration phpunit.github.xml --coverage-clover build/logs/clover.xml --coverage-text
+            ./vendor/bin/phpunit --verbose --stderr --coverage-clover build/logs/clover.xml --coverage-text
           else
-            ./vendor/bin/phpunit --verbose --stderr --configuration phpunit.github.xml
+            ./vendor/bin/phpunit --verbose --stderr
           fi
         working-directory: './'
       - name: 'Upload coverage results to Coveralls'
@@ -159,7 +187,7 @@ jobs:
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_PARALLEL: true
-          COVERALLS_FLAG_NAME: php-${{ matrix.php_versions }}-postgres-${{ matrix.postgres }}
+          COVERALLS_FLAG_NAME: php-${{ matrix.php_versions }}-laravel-${{ matrix.laravel }}-postgres-${{ matrix.postgres }}
         run: ./vendor/bin/php-coveralls --coverage_clover=build/logs/clover.xml -v
   coverage:
     needs: test

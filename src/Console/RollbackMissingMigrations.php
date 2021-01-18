@@ -39,7 +39,8 @@ class RollbackMissingMigrations extends BaseCommand
         }
 
         $backup = $this->dbHelper->backupBatchNumbers($migrationsForRollback);
-        $nextBatchNumber = $this->migrator->getRepository()
+        $nextBatchNumber = $this->migrator
+            ->getRepository()
             ->getNextBatchNumber();
         $this->dbHelper->updateBatch($migrationsForRollback, $nextBatchNumber);
         $this->rollback($this->argument('path_to_artisan'));
@@ -50,16 +51,22 @@ class RollbackMissingMigrations extends BaseCommand
     protected function getMigrationsNamesForRollback(): array
     {
         $migrationsFromFiles = array_keys($this->migrator->getMigrationFiles($this->getMigrationPaths()));
-        $migrationsFromDb = $this->migrator->getRepository()
+        $migrationsFromDb = $this->migrator
+            ->getRepository()
             ->getRan();
         return array_diff($migrationsFromDb, $migrationsFromFiles);
     }
 
     protected function rollback(string $artisanPath): void
     {
-        $command = "php {$artisanPath} migrate:rollback {$this->getOldPaths()} {$this->getRealpath()}";
+        $command = sprintf('php %s migrate:rollback %s %s',
+            $artisanPath,
+            $this->getOldPaths(),
+            $this->getRealpath()
+        );
         $process = Process::fromShellCommandline($command);
         $process->run();
+
         $this->line($process->getOutput());
     }
 
@@ -67,8 +74,9 @@ class RollbackMissingMigrations extends BaseCommand
     {
         $targetPaths = [];
         if ($this->input->hasOption('old-path') && $this->option('old-path')) {
-            $targetPaths = $this->option('old-path');
+            $targetPaths = (array) $this->option('old-path');
         }
+
         return implode(' ', array_map(function (string $path) {
             return "--path={$path}";
         }, $targetPaths));

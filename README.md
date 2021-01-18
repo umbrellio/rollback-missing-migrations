@@ -8,6 +8,7 @@
 [![Total Downloads](https://poser.pugx.org/umbrellio/php-deploy/downloads.png)](https://packagist.org/packages/umbrellio/php-deploy)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/umbrellio/php-deploy/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 [![Build Status](https://scrutinizer-ci.com/g/umbrellio/php-deploy/badges/build.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/php-deploy/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/umbrellio/php-deploy/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/php-deploy/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/umbrellio/php-deploy/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/php-deploy/?branch=master)
 
 
@@ -21,7 +22,9 @@ __composer__
 
 In your **new** release directory:   
 
-`php artisan rollback_missing_migrations:rollback absolute_path_to_artisan_in_old_release_directory`
+`php artisan rollback_missing_migrations:rollback <path_to_artisan>`
+
+- `<path_to_artisan>` - absolute path to artisan command in previous release 
 
 Example:
 
@@ -33,7 +36,7 @@ If your migrations files locate in the custom directory you can use optional par
 - `--old-path` - path where your migration files locate in **old** release
 - `--realpath` - this flag indicates, how `--path` and `--old-path` formats (absolute or relative) will be recognized
  
- Example with a relative path:
+Example with a relative path:
  
 ```
 php artisan rollback_missing_migrations:rollback /projects/old_release_app/artisan \
@@ -41,7 +44,7 @@ php artisan rollback_missing_migrations:rollback /projects/old_release_app/artis
     --path=database/custom_migration_folder 
 ```
 
- Example with an absolute path:
+Example with an absolute path:
  
 ```
 php artisan rollback_missing_migrations:rollback /projects/old_release/your_app/artisan \
@@ -52,7 +55,7 @@ php artisan rollback_missing_migrations:rollback /projects/old_release/your_app/
 
 ## Authors
 
-Created by Korben Dallas.
+Created by Art4es & Korben Dallas.
 
 <a href="https://github.com/umbrellio/">
 <img style="float: left;" src="https://umbrellio.github.io/Umbrellio/supported_by_umbrellio.svg" alt="Supported by Umbrellio" width="439" height="72">

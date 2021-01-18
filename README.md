@@ -2,14 +2,14 @@
 
 ###### Laravel package for rolling back migrations between different releases
 
-[![Github Status](https://github.com/umbrellio/php-deploy/workflows/CI/badge.svg)](https://github.com/umbrellio/php-deploy/actions)
-[![Coverage Status](https://coveralls.io/repos/github/umbrellio/php-deploy/badge.svg?branch=master)](https://coveralls.io/github/umbrellio/php-deploy?branch=master)
-[![Latest Stable Version](https://poser.pugx.org/umbrellio/php-deploy/v/stable.png)](https://packagist.org/packages/umbrellio/php-deploy)
-[![Total Downloads](https://poser.pugx.org/umbrellio/php-deploy/downloads.png)](https://packagist.org/packages/umbrellio/php-deploy)
-[![Code Intelligence Status](https://scrutinizer-ci.com/g/umbrellio/php-deploy/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
-[![Build Status](https://scrutinizer-ci.com/g/umbrellio/php-deploy/badges/build.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/php-deploy/build-status/master)
-[![Code Coverage](https://scrutinizer-ci.com/g/umbrellio/php-deploy/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/php-deploy/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/umbrellio/php-deploy/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/php-deploy/?branch=master)
+[![Github Status](https://github.com/umbrellio/rollback-missing-migrations/workflows/CI/badge.svg)](https://github.com/umbrellio/rollback-missing-migrations/actions)
+[![Coverage Status](https://coveralls.io/repos/github/umbrellio/rollback-missing-migrations/badge.svg?branch=master)](https://coveralls.io/github/umbrellio/rollback-missing-migrations?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/umbrellio/rollback-missing-migrations/v/stable.png)](https://packagist.org/packages/umbrellio/rollback-missing-migrations)
+[![Total Downloads](https://poser.pugx.org/umbrellio/rollback-missing-migrations/downloads.png)](https://packagist.org/packages/umbrellio/rollback-missing-migrations)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/umbrellio/rollback-missing-migrations/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+[![Build Status](https://scrutinizer-ci.com/g/umbrellio/rollback-missing-migrations/badges/build.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/rollback-missing-migrations/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/umbrellio/rollback-missing-migrations/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/rollback-missing-migrations/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/umbrellio/rollback-missing-migrations/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/umbrellio/rollback-missing-migrations/?branch=master)
 
 
 ## Installation

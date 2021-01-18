@@ -16,7 +16,7 @@
 
 __composer__  
 
-`composer require umbrellio/php-deploy`
+`composer require umbrellio/rollback-missing-migrations`
 
 ## Usage
 

@@ -1,5 +1,5 @@
 {
-    "name": "umbrellio/php-deploy",
+    "name": "umbrellio/rollback-missing-migrations",
     "description": "Laravel package for rolling back migrations between different releases",
     "minimum-stability": "dev",
     "support": {
@@ -10,7 +10,8 @@
         "php",
         "laravel",
         "deploy",
-        "umbrellio"
+        "umbrellio",
+        "rollback migrations"
     ],
     "license": "MIT",
     "authors": [
@@ -20,7 +21,7 @@
         },
         {
             "name": "Korben Dallas",
-            "email": "pvsaintpe@gmail.com"
+            "email": "pvsaintpe@icloud.com"
         }
     ],
     "autoload": {
@@ -49,10 +50,8 @@
         "squizlabs/php_codesniffer": "^3.5"
     },
     "scripts": {
-        "lint-fix": "vendor/bin/ecs check src --fix --config=ecs.yml",
-        "test": [
-            "vendor/bin/phpunit"
-        ]
+        "lint": "vendor/bin/ecs check src --config=ecs.yml",
+        "lint-fix": "vendor/bin/ecs check src --fix --config=ecs.yml"
     },
     "extra": {
         "laravel": {

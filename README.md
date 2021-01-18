@@ -1,4 +1,4 @@
-# PHP Deploy
+# Rollback Missing Migrations for Laravel
 
 ###### Laravel package for rolling back migrations between different releases
 

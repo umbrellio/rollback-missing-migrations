@@ -1,4 +1,4 @@
-# PHP Deploy
+# Rollback Missing Migrations for Laravel
 
 ###### Laravel package for rolling back migrations between different releases
 
@@ -16,7 +16,7 @@
 
 __composer__  
 
-`composer require umbrellio/php-deploy`
+`composer require umbrellio/rollback-missing-migrations`
 
 ## Usage
 

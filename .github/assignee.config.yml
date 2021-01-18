@@ -4,11 +4,13 @@ numberOfReviewers: 1
 
 reviewers:
  - pvsaintpe
+ - art4es
 
 addAssignees: true
 
 assignees:
  - pvsaintpe
+ - art4es
 
 numberOfAssignees: 1
 

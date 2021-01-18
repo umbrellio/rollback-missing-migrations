@@ -24,6 +24,8 @@ In your **new** release directory:
 
 `php artisan rollback_missing_migrations:rollback <path_to_artisan>`
 
+- `<path_to_artisan>` - absolute path to artisan command in previous release 
+
 Example:
 
 `php artisan rollback_missing_migrations:rollback /projects/old_release/your_app/artisan`

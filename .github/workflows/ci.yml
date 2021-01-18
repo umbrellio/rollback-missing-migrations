@@ -10,6 +10,13 @@ on:
       - reopened
       - edited
       - synchronize
+      - labeled
+      - assigned
+      - unlabeled
+      - unlocked
+      - review_requested
+      - review_request_removed
+      - unassigned
 
 env:
   php_extensions: 'apcu, bcmath, ctype, curl, dom, iconv, intl, json, mbstring, opcache, openssl, pdo, pdo_pgsql, pcntl, pcov, posix, redis, session, simplexml, sockets, tokenizer, xml, xmlwriter, zip'

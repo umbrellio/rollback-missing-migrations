@@ -16,7 +16,7 @@ class RollbackNewMigrations extends Command
 {
     private const COMMAND = 'git ls-tree --name-only origin/master database/migrations/';
 
-    protected $signature = 'deploy:rollback-new-migrations';
+    protected $signature = 'rollback_new_migrations:rollback';
     protected $description = 'Rollback new migrations (default way for k8s staging)';
 
     public function handle(): void

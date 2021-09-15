@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use SplFileInfo;
 
-class RollbackNewMigrationsCommand extends Command
+class RollbackNewMigrations extends Command
 {
     private const COMMAND = 'git ls-tree --name-only origin/master database/migrations/';
 

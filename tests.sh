@@ -10,7 +10,7 @@ sed -e "s/\${USERNAME}/postgres/" \
     -e "s/\${HOST}/127.0.0.1/" \
     .env.sample > .env
 sed -e "s/\${LARAVEL_VERSION}/^8.0/" \
-    -e "s/\${PHP_VERSION}/8.0/" \
+    -e "s/\${PHP_VERSION}/7.4.16/" \
     composer.json.sample > composer.json
 rm -rf release
 composer create-project laravel/laravel release
@@ -21,8 +21,8 @@ rm -rf release/tests
 cp composer.json release/composer.json
 cp -rf database/new_migrations release/database/migrations
 cp .env release/.env
-cd release && composer update
-cd ../../ && composer update
+cd release && COMPOSER_MEMORY_LIMIT=-1 composer update
+cd ../../ && COMPOSER_MEMORY_LIMIT=-1 composer update
 composer lint-fix
 sed -e "s/\${USERNAME}/postgres/" \
     -e "s/\${PASSWORD}//" \

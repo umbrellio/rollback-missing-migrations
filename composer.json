@@ -50,8 +50,8 @@
         "squizlabs/php_codesniffer": "^3.5"
     },
     "scripts": {
-        "lint": "vendor/bin/ecs check src --config=ecs.yml",
-        "lint-fix": "vendor/bin/ecs check src --fix --config=ecs.yml"
+        "lint": "vendor/bin/ecs check src --config=ecs.php",
+        "lint-fix": "vendor/bin/ecs check src --fix --config=ecs.php"
     },
     "extra": {
         "laravel": {

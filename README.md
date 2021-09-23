@@ -53,6 +53,8 @@ php artisan rollback_missing_migrations:rollback /projects/old_release/your_app/
     --realpath
 ```
 
+In case if you need rollback new migrations different from origin/master, you can use `rollback_new_migrations:rollback`
+
 ## Authors
 
 Created by Art4es & Korben Dallas.

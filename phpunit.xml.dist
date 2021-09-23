@@ -13,6 +13,9 @@
         <include>
             <directory suffix=".php">./src</directory>
         </include>
+        <exclude>
+            <file>./src/Console/RollbackNewMigrations.php</file>
+        </exclude>
     </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>

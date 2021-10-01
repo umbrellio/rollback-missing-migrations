@@ -6,6 +6,7 @@ namespace Umbrellio\Deploy\Console;
 
 use Illuminate\Database\Console\Migrations\BaseCommand;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\Process\Process;
 use Umbrellio\Deploy\Helpers\DbHelper;
 
@@ -38,14 +39,16 @@ class RollbackMissingMigrations extends BaseCommand
             return;
         }
 
-        $backup = $this->dbHelper->backupBatchNumbers($migrationsForRollback);
-        $nextBatchNumber = $this->migrator
-            ->getRepository()
-            ->getNextBatchNumber();
-        $this->dbHelper->updateBatch($migrationsForRollback, $nextBatchNumber);
-        $this->rollback($this->argument('path_to_artisan'));
-        $this->dbHelper->restoreBatchNumbers($backup);
-        $this->dbHelper->checkIfRollbackIsSuccessful($migrationsForRollback);
+        DB::transaction(function () use ($migrationsForRollback) {
+            $backup = $this->dbHelper->backupBatchNumbers($migrationsForRollback);
+            $nextBatchNumber = $this->migrator
+                ->getRepository()
+                ->getNextBatchNumber();
+            $this->dbHelper->updateBatch($migrationsForRollback, $nextBatchNumber);
+            $this->rollback($this->argument('path_to_artisan'));
+            $this->dbHelper->restoreBatchNumbers($backup);
+            $this->dbHelper->checkIfRollbackIsSuccessful($migrationsForRollback);
+        });
     }
 
     protected function getMigrationsNamesForRollback(): array

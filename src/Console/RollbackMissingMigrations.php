@@ -59,7 +59,8 @@ class RollbackMissingMigrations extends BaseCommand
 
     protected function rollback(string $artisanPath): void
     {
-        $command = sprintf('php %s migrate:rollback %s %s',
+        $command = sprintf(
+            'php %s migrate:rollback %s %s',
             $artisanPath,
             $this->getOldPaths(),
             $this->getRealpath()

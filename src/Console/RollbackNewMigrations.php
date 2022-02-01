@@ -16,7 +16,7 @@ class RollbackNewMigrations extends Command
 {
     private const COMMAND_PATTERN = 'git ls-tree --name-only origin/master {git_migrations_path}';
 
-    protected $signature = 'rollback_new_migrations:rollback {git_migrations_path=}';
+    protected $signature = 'rollback_new_migrations:rollback {--git_migrations_path=}';
     protected $description = 'Rollback new migrations (default way for k8s staging)';
 
     public function handle(): void

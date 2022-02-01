@@ -14,9 +14,9 @@ use SplFileInfo;
 
 class RollbackNewMigrations extends Command
 {
-    private const COMMAND = 'git ls-tree --name-only origin/master database/migrations/';
+    private const COMMAND_PATTERN = 'git ls-tree --name-only origin/master {git_migrations_path}';
 
-    protected $signature = 'rollback_new_migrations:rollback';
+    protected $signature = 'rollback_new_migrations:rollback {git_migrations_path=}';
     protected $description = 'Rollback new migrations (default way for k8s staging)';
 
     public function handle(): void
@@ -26,7 +26,10 @@ class RollbackNewMigrations extends Command
             return;
         }
 
-        $migrationsFromMaster = collect(explode(PHP_EOL, shell_exec(self::COMMAND)))
+        $gitMigrationsPath = $this->option('git_migrations_path') ?? 'database/migrations/';
+        $gitCommand = str_replace('{git_migrations_path}', $gitMigrationsPath, self::COMMAND_PATTERN);
+
+        $migrationsFromMaster = collect(explode(PHP_EOL, shell_exec($gitCommand)))
             ->filter()
             ->map(fn (string $path) => new SplFileInfo(base_path($path)));
         $migrationsFromCurrent = collect(File::files(base_path('database/migrations')));

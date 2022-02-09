@@ -10,7 +10,7 @@ sed -e "s/\${USERNAME}/postgres/" \
     -e "s/\${HOST}/127.0.0.1/" \
     .env.sample > .env
 sed -e "s/\${LARAVEL_VERSION}/^8.0/" \
-    -e "s/\${PHP_VERSION}/7.4.16/" \
+    -e "s/\${PHP_VERSION}/8.0.11/" \
     composer.json.sample > composer.json
 rm -rf release
 composer create-project laravel/laravel release

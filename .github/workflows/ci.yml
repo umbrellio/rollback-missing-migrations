@@ -109,7 +109,7 @@ jobs:
           - operating_system: ubuntu-latest
             postgres: '13'
             php_versions: '8.0'
-            laravel: '^8.0'
+            laravel: '^9.0'
             experimental: false
             coverage: false
     runs-on: '${{ matrix.operating_system }}'
@@ -176,14 +176,11 @@ jobs:
               composer.json.sample > composer.json
           composer create-project --prefer-dist laravel/laravel:${{ matrix.laravel }} release
           rm -rf release/database/migrations
-          rm release/composer.json
           rm release/.env
           rm -rf release/tests
-          cp composer.json release/composer.json
           cp -rf database/new_migrations release/database/migrations
           cp .env release/.env
-          cd release && COMPOSER_MEMORY_LIMIT=-1 composer update
-          cd ../../
+          cd ../
           sed -e "s/\${USERNAME}/${{ env.DB_USER }}/" \
               -e "s/\${PASSWORD}/${{ env.DB_PASSWORD }}/" \
               -e "s/\${DATABASE}/${{ env.DB_NAME }}/" \

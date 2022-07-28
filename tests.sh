@@ -20,7 +20,6 @@ rm release/.env
 rm -rf release/tests
 cp -rf database/new_migrations release/database/migrations
 cp .env release/.env
-cd release && COMPOSER_MEMORY_LIMIT=-1 composer update
 cd ../../ && COMPOSER_MEMORY_LIMIT=-1 composer update
 composer lint-fix
 sed -e "s/\${USERNAME}/postgres/" \

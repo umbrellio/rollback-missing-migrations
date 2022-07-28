@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 psql postgres -U user -tc "SELECT 1 FROM pg_database WHERE datname = 'testing'" | grep -q 1 || psql postgres -U user -c "CREATE DATABASE testing"
 cd app
 rm -f .env
@@ -16,12 +15,15 @@ sed -e "s/\${LARAVEL_VERSION}/^8.0/" \
 rm -rf release
 composer create-project laravel/laravel release
 rm -rf release/database/migrations
+# rm release/composer.json
 rm release/.env
 rm -rf release/tests
+# cp composer.json release/composer.json
 cp -rf database/new_migrations release/database/migrations
 cp .env release/.env
-cd ../../ && COMPOSER_MEMORY_LIMIT=-1 composer update
-composer lint-fix
+# cd release && COMPOSER_MEMORY_LIMIT=-1 composer update
+cd ../ && COMPOSER_MEMORY_LIMIT=-1 composer update
+# composer lint-fix
 sed -e "s/\${USERNAME}/postgres/" \
     -e "s/\${PASSWORD}//" \
     -e "s/\${DATABASE}/testing/" \

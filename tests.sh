@@ -16,10 +16,8 @@ sed -e "s/\${LARAVEL_VERSION}/^8.0/" \
 rm -rf release
 composer create-project laravel/laravel release
 rm -rf release/database/migrations
-rm release/composer.json
 rm release/.env
 rm -rf release/tests
-cp composer.json release/composer.json
 cp -rf database/new_migrations release/database/migrations
 cp .env release/.env
 cd release && COMPOSER_MEMORY_LIMIT=-1 composer update

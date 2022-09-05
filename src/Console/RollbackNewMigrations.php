@@ -55,10 +55,8 @@ class RollbackNewMigrations extends Command
 
     private function downMigrationFile(SplFileInfo $f): void
     {
-        require_once $f->getPathname();
+        $migration = require_once $f;
         $filename = explode('.php', $f->getRelativePathname())[0];
-        $class = Str::studly(implode('_', array_slice(explode('_', $filename), 4)));
-        $migration = new $class();
         if (method_exists($migration, 'down')) {
             $migration->down();
             DB::table(config('database.migrations', 'migrations'))->where('migration', $filename)->delete();

@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use SplFileInfo;
 
 class RollbackNewMigrations extends Command

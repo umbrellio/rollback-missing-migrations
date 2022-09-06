@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Umbrellio\Deploy\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -55,10 +56,12 @@ class RollbackNewMigrations extends Command
 
     private function downMigrationFile(SplFileInfo $f): void
     {
-        require_once $f->getPathname();
+        $migration = require_once $f;
         $filename = explode('.php', $f->getRelativePathname())[0];
-        $class = Str::studly(implode('_', array_slice(explode('_', $filename), 4)));
-        $migration = new $class();
+        if (!$migration instanceof Migration) {
+            $class = Str::studly(implode('_', array_slice(explode('_', $filename), 4)));
+            $migration = new $class();
+        }
         if (method_exists($migration, 'down')) {
             $migration->down();
             DB::table(config('database.migrations', 'migrations'))->where('migration', $filename)->delete();

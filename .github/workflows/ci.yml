@@ -112,6 +112,12 @@ jobs:
             laravel: '^9.0'
             experimental: false
             coverage: false
+          - operating_system: ubuntu-latest
+            postgres: '14'
+            php_versions: '8.1'
+            laravel: '^10.0'
+            experimental: false
+            coverage: false
     runs-on: '${{ matrix.operating_system }}'
     services:
       postgres:

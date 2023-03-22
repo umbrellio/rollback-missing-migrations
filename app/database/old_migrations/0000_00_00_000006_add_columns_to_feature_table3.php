@@ -23,10 +23,7 @@ class AddColumnsToFeatureTable3 extends Migration
     {
         DB::transaction(function () {
             Schema::table('feature_table3', function (Blueprint $table) {
-                $table->dropColumn([
-                    'name',
-                    'code',
-                ]);
+                $table->dropColumn(['name', 'code']);
             });
         });
     }

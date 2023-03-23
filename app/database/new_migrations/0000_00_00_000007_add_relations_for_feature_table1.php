@@ -28,9 +28,7 @@ class AddRelationsForFeatureTable1 extends Migration
     {
         DB::transaction(function () {
             Schema::table('feature_table1', function (Blueprint $table) {
-                $table->dropColumn([
-                    'feature_table2_id',
-                ]);
+                $table->dropColumn(['feature_table2_id']);
             });
         });
     }

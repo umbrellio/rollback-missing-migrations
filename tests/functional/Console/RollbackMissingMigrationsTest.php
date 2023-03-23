@@ -17,7 +17,7 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
     private const RELEASE_PATH = self::APP_PATH . 'release/';
     private const DATABASE_PATH = self::APP_PATH . 'database/';
 
-    public function provideMigrations(): Generator
+    public static function provideMigrations(): Generator
     {
         yield 'same_versions_of_migrations' => [
             'before' => [

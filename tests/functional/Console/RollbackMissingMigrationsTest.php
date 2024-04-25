@@ -50,7 +50,7 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
      * @test
      * @dataProvider provideMigrations
      */
-    public function nothingToRollback(array $before): void
+    public function nothingToRollback(array $before, array $after): void
     {
         $this->assertSame($before, $this->getMigrations());
         $this->rollback(self::DATABASE_PATH . 'old_migrations', self::DATABASE_PATH . 'old_migrations');

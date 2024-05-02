@@ -134,6 +134,7 @@ jobs:
           coverage: xdebug
           tools: 'phpunit'
       - name: 'Install PHP dependencies with Composer'
+        continue-on-error: ${{ matrix.experimental }}
         run: |
           composer require "laravel/framework=${{ matrix.laravel }}" --no-update
           COMPOSER_MEMORY_LIMIT=-1 composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader

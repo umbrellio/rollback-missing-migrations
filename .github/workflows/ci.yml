@@ -19,10 +19,10 @@ on:
       - unassigned
 
 env:
-  php_extensions: 'apcu, bcmath, ctype, curl, dom, iconv, intl, json, mbstring, opcache, openssl, pdo, pdo_pgsql, pcntl, pcov, posix, redis, session, simplexml, sockets, tokenizer, xml, xmlwriter, zip'
+  php_extensions: 'apcu, bcmath, ctype, curl, dom, iconv, intl, json, mbstring, opcache, openssl, pdo, pdo_pgsql, pcntl, pcov, posix, redis, session, simplexml, sockets, tokenizer, xml, xmlwriter, zip, xdebug'
   key: cache-v0.1
   DB_USER: 'postgres'
-  DB_NAME: 'testing'
+  DB_NAME: 'postgres'
   DB_PASSWORD: 'postgres'
   DB_HOST: '127.0.0.1'
 
@@ -33,11 +33,11 @@ jobs:
     strategy:
       matrix:
         operating_system: [ubuntu-latest]
-        php_versions: ['7.4']
+        php_versions: ['8.3']
       fail-fast: false
     env:
       PHP_CS_FIXER_FUTURE_MODE: '0'
-    name: 'Lint PHP'
+    name: 'Linter PHP'
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v2
@@ -78,45 +78,15 @@ jobs:
         coverage: [false]
         experimental: [false]
         operating_system: [ubuntu-latest]
-        postgres: ['9.6']
-        laravel: ['^6.0']
-        php_versions: ['7.4']
+        postgres: ['11', '12', '13', '14', '15']
+        laravel: ['^11.0']
+        php_versions: ['8.3']
         include:
           - operating_system: ubuntu-latest
-            postgres: '10'
-            php_versions: '7.4'
-            laravel: '^7.0'
-            experimental: false
-            coverage: true
-          - operating_system: ubuntu-latest
-            postgres: '11'
-            php_versions: '7.4'
-            laravel: '^8.0'
-            experimental: false
-            coverage: true
-          - operating_system: ubuntu-latest
-            postgres: '12'
-            php_versions: '8.0'
-            laravel: '^8.0'
-            experimental: false
-            coverage: true
-          - operating_system: ubuntu-latest
-            postgres: '13'
-            php_versions: '8.0'
-            laravel: '^9.0'
-            experimental: false
-            coverage: false
-          - operating_system: ubuntu-latest
-            postgres: '14'
-            php_versions: '8.1'
-            laravel: '^10.0'
-            experimental: false
-            coverage: false
-          - operating_system: ubuntu-latest
-            postgres: '15'
-            php_versions: '8.2'
+            postgres: '16'
+            php_versions: '8.4'
             laravel: '^11.0'
-            experimental: false
+            experimental: true
             coverage: false
     runs-on: '${{ matrix.operating_system }}'
     services:
@@ -130,7 +100,7 @@ jobs:
           - 5432:5432
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-    name: 'Test / Laravel ${{ matrix.laravel }} / PHP ${{ matrix.php_versions }} / Postgres ${{ matrix.postgres }}'
+    name: 'Testing / Laravel ${{ matrix.laravel }} / PHP ${{ matrix.php_versions }} / Postgres ${{ matrix.postgres }}'
     needs:
       - lint
     steps:
@@ -160,8 +130,8 @@ jobs:
         with:
           php-version: ${{ matrix.php_versions }}
           extensions: ${{ env.php_extensions }}
-          ini-values: 'pcov.directory=src, date.timezone=UTC, upload_max_filesize=20M, post_max_size=20M, memory_limit=512M, short_open_tag=Off'
-          coverage: pcov
+          ini-values: 'pcov.directory=src, date.timezone=UTC, upload_max_filesize=20M, post_max_size=20M, memory_limit=512M, short_open_tag=Off, xdebug.mode="develop,coverage"'
+          coverage: xdebug
           tools: 'phpunit'
       - name: 'Install PHP dependencies with Composer'
         run: |
@@ -192,6 +162,7 @@ jobs:
               -e "s/\${DATABASE}/${{ env.DB_NAME }}/" \
               -e "s/\${HOST}/${{ env.DB_HOST }}/" \
               phpunit.xml.dist > phpunit.xml
+          ./vendor/bin/phpunit -c phpunit.xml --migrate-configuration
           if [[ ${{ matrix.coverage }} == true ]]; then
             ./vendor/bin/phpunit --stderr --coverage-clover build/logs/clover.xml --coverage-text
           else

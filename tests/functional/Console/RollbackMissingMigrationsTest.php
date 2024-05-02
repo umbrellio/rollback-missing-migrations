@@ -7,6 +7,8 @@ namespace Umbrellio\Deploy\Tests\functional\Console;
 use Generator;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Umbrellio\Deploy\Exceptions\RollbackMissingMigrationException;
 use Umbrellio\Deploy\RollbackMissingMigrationServiceProvider;
 use Umbrellio\Deploy\Tests\FunctionalTestCase;
@@ -35,10 +37,8 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider provideMigrations
-     */
+    #[Test]
+    #[DataProvider('provideMigrations')]
     public function rollbackSuccessful(array $before, array $after): void
     {
         $this->assertSame($before, $this->getMigrations());
@@ -46,10 +46,8 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
         $this->assertSame($after, $this->getMigrations());
     }
 
-    /**
-     * @test
-     * @dataProvider provideMigrations
-     */
+    #[Test]
+    #[DataProvider('provideMigrations')]
     public function nothingToRollback(array $before, array $after): void
     {
         $this->assertSame($before, $this->getMigrations());
@@ -57,9 +55,7 @@ class RollbackMissingMigrationsTest extends FunctionalTestCase
         $this->assertSame($before, $this->getMigrations());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function rollbackFail(): void
     {
         $this->expectException(RollbackMissingMigrationException::class);

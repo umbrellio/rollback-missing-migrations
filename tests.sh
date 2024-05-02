@@ -9,8 +9,8 @@ sed -e "s/\${USERNAME}/postgres/" \
     -e "s/\${DATABASE}/testing/" \
     -e "s/\${HOST}/127.0.0.1/" \
     .env.sample > .env
-sed -e "s/\${LARAVEL_VERSION}/^8.0/" \
-    -e "s/\${PHP_VERSION}/8.0.11/" \
+sed -e "s/\${LARAVEL_VERSION}/^11.0/" \
+    -e "s/\${PHP_VERSION}/8.3.6/" \
     composer.json.sample > composer.json
 rm -rf release
 composer create-project laravel/laravel release
@@ -29,4 +29,5 @@ sed -e "s/\${USERNAME}/postgres/" \
     -e "s/\${DATABASE}/testing/" \
     -e "s/\${HOST}/127.0.0.1/" \
     phpunit.xml.dist > phpunit.xml
-php -d pcov.directory='.' vendor/bin/phpunit --coverage-html build --coverage-text
+php vendor/bin/phpunit -c phpunit.xml --migrate-configuration
+php -d xdebug.mode=coverage -d memory_limit=-1 vendor/bin/phpunit --coverage-html build --coverage-text

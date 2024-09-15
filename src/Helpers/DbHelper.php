@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Umbrellio\Deploy\Helpers;
+namespace Umbrellio\RollbackMissingMigrations\Helpers;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use Umbrellio\Deploy\Exceptions\RollbackMissingMigrationException;
+use Umbrellio\RollbackMissingMigrations\Exceptions\RollbackMissingMigrationException;
 
 class DbHelper
 {

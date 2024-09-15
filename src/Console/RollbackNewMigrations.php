@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Umbrellio\Deploy\Console;
+namespace Umbrellio\RollbackMissingMigrations\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Migrations\Migration;

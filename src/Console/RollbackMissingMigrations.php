@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Umbrellio\Deploy\Console;
+namespace Umbrellio\RollbackMissingMigrations\Console;
 
 use Illuminate\Database\Console\Migrations\BaseCommand;
 use Illuminate\Support\Facades\App;
 use Symfony\Component\Process\Process;
-use Umbrellio\Deploy\Helpers\DbHelper;
+use Umbrellio\RollbackMissingMigrations\Helpers\DbHelper;
 
 class RollbackMissingMigrations extends BaseCommand
 {

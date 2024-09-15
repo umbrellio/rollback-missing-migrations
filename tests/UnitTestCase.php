@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Umbrellio\Deploy\Tests;
+namespace Umbrellio\RollbackMissingMigrations\Tests;
 
 use PHPUnit\Framework\TestCase;
 

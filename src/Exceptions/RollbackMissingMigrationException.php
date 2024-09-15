@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Umbrellio\Deploy\Exceptions;
+namespace Umbrellio\RollbackMissingMigrations\Exceptions;
 
 use Exception;
 use Illuminate\Support\Collection;

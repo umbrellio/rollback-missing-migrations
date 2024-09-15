@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Umbrellio\Deploy;
+namespace Umbrellio\RollbackMissingMigrations;
 
 use Illuminate\Support\ServiceProvider;
-use Umbrellio\Deploy\Console\RollbackMissingMigrations;
-use Umbrellio\Deploy\Console\RollbackNewMigrations;
+use Umbrellio\RollbackMissingMigrations\Console\RollbackMissingMigrations;
+use Umbrellio\RollbackMissingMigrations\Console\RollbackNewMigrations;
 
 class RollbackMissingMigrationServiceProvider extends ServiceProvider
 {

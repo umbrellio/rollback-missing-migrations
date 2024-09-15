@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Umbrellio\Deploy\Tests\functional\Console;
+namespace Umbrellio\RollbackMissingMigrations\Tests\functional\Console;
 
 use Generator;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
-use Umbrellio\Deploy\Exceptions\RollbackMissingMigrationException;
-use Umbrellio\Deploy\RollbackMissingMigrationServiceProvider;
-use Umbrellio\Deploy\Tests\FunctionalTestCase;
+use Umbrellio\RollbackMissingMigrations\Exceptions\RollbackMissingMigrationException;
+use Umbrellio\RollbackMissingMigrations\RollbackMissingMigrationServiceProvider;
+use Umbrellio\RollbackMissingMigrations\Tests\FunctionalTestCase;
 
 class RollbackMissingMigrationsTest extends FunctionalTestCase
 {

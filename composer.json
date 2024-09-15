@@ -26,12 +26,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Umbrellio\\Deploy\\": "src/"
+            "Umbrellio\\RollbackMissingMigrations\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Umbrellio\\Deploy\\Tests\\": "tests/"
+            "Umbrellio\\RollbackMissingMigrations\\Tests\\": "tests/"
         }
     },
     "require": {
@@ -56,7 +56,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Umbrellio\\Deploy\\RollbackMissingMigrationServiceProvider"
+                "Umbrellio\\RollbackMissingMigrations\\RollbackMissingMigrationServiceProvider"
             ]
         }
     }

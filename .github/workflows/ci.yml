@@ -79,7 +79,7 @@ jobs:
         experimental: [false]
         operating_system: [ubuntu-latest]
         postgres: ['11', '12', '13', '14', '15']
-        laravel: ['^11.0']
+        laravel: ['^11.0', '^12.0']
         php_versions: ['8.3']
         include:
           - operating_system: ubuntu-latest

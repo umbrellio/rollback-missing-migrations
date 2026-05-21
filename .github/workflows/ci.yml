@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
         operating_system: [ubuntu-latest]
-        php_versions: ['8.5']
+        php_versions: ['8.3']
       fail-fast: false
     env:
       PHP_CS_FIXER_FUTURE_MODE: '0'
@@ -81,6 +81,37 @@ jobs:
         postgres: ['15', '16', '17', '18']
         laravel: ['^11.0', '^12.0', '^13.0']
         php_versions: ['8.5']
+        include:
+          - operating_system: ubuntu-latest
+            postgres: '11'
+            php_versions: '8.3'
+            laravel: '^11.0'
+            experimental: false
+            coverage: true
+          - operating_system: ubuntu-latest
+            postgres: '12'
+            php_versions: '8.3'
+            laravel: '^11.0'
+            experimental: false
+            coverage: true
+          - operating_system: ubuntu-latest
+            postgres: '13'
+            php_versions: '8.3'
+            laravel: '^11.0'
+            experimental: false
+            coverage: true
+          - operating_system: ubuntu-latest
+            postgres: '14'
+            php_versions: '8.3'
+            laravel: '^11.0'
+            experimental: false
+            coverage: true
+          - operating_system: ubuntu-latest
+            postgres: '15'
+            php_versions: '8.3'
+            laravel: '^11.0'
+            experimental: false
+            coverage: true
     runs-on: '${{ matrix.operating_system }}'
     services:
       postgres:

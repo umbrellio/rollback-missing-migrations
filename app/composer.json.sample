@@ -4,8 +4,6 @@
     "license": "MIT",
     "require": {
         "php": "^${PHP_VERSION}",
-        "fideloper/proxy": "*",
-        "fruitcake/laravel-cors": "*",
         "guzzlehttp/guzzle": "*",
         "laravel/framework": "${LARAVEL_VERSION}",
         "laravel/tinker": "*"
